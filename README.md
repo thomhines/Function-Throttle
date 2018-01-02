@@ -1,4 +1,6 @@
-# Throttle
+# Function Throttle
+
+### [Demo](http://projects.thomhines.com/Function-Throttle/)
 
 ##### Control how often a function gets invoked from within the function itself.
 
