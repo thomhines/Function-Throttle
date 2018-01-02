@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en-us">
+
+<head>
+	<title>Throttle</title>
+	<meta charset="utf-8" />
+	<meta name="description" content="!!!" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- !!! add ", user-scalable=no" if mobile app -->
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<link rel="canonical" href="!!!http://example.com/2017/09/a-new-article-to-red.html"> <!-- Helps prevent duplicate content issues -->
+
+	<meta name="theme-color" content="#333">
+
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="!!!https://sitename.com/" />
+	<meta property="og:title" content="!!!Page Title" />
+	<meta property="og:description" content="!!!Page Description" />
+	<meta property="og:image" content="!!!https://sitename.com/img/something.png" />
+	<meta property="og:site_name" content="!!!Site Name">
+	<meta property="og:locale" content="en_US">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="!!!@site_account">
+	<meta name="twitter:creator" content="!!!@individual_account">
+	<meta name="twitter:url" content="!!!https://sitename.com/">
+	<meta name="twitter:title" content="!!!Page Title">
+	<meta name="twitter:description" content="!!!Page Description (less than 200 characters)">
+	<meta name="twitter:image" content="!!!https://example.com/image.jpg">
+	<link rel="image_src" href="!!!https://sitename.com/img/something.png">
+
+	<style>
+		body {
+			width: 500px;
+			margin: 100px auto;
+			background: #fee;
+			color: #333;
+			font-family: Lato, Helvetica, Arial, sans-serif;
+			overflow: auto;
+		}
+
+		h3 {
+			margin: 5em 0 1em;
+		}
+
+		h4 {
+			margin: 5em 0 1em;
+			clear: both;
+			line-height: 1.4em;
+		}
+
+		h3 + h4,
+		.example1 h4 {
+			margin-top: 1em;
+		}
+
+		[class*='example'] {
+			overflow: auto;
+		}
+
+		.demo {
+			clear: both;
+			float: left;
+			width: 200px;
+			height: 200px;
+			padding: 10px;
+			background: #fdd;
+			font-size: 12px;
+		}
+
+		.demo:before {
+			content: "Move mouse in here...";
+		}
+
+		[class*='feedback'] {
+			margin: 0 0 0 240px;
+		}
+
+		.function_notice {
+			background: #faa;
+			padding: .2em .6em;
+			text-align: center;
+		}
+
+		code {
+			margin: 0 0 20px;
+			padding: 10px;
+			display: block;
+			background: #eee;
+			white-space: nowrap;
+			overflow-x: auto;
+		}
+
+	</style>
+</head>
+<body>
+
+	<h1>Throttle Demo</h1>
+	<h2>In-Function debouncing/throttling to control how often a function gets run.</h2>
+	<p>similar to the debounce/throttle functions in Lodash, but meant to be be run within the function itself instead of attached to an event. This keeps your code clean (no need to attach debounce to EVERY event trigger) and ensures that your functions are consistently throttled no matter how many triggers there might be.</p>
+
+	<p>To use these functions, simply place them at the top of your function like so and they will limit how often the rest of your function is run based on the settings:</p>
+
+	<code>if(<b>debounce()</b>) return;</code>
+	<p>or</p>
+	<code>if(<b>throttle()</b>) return;</code>
+
+
+	<h3>Options</h3>
+
+	<h4>debounce([func], [wait=100], [options={}])<br>
+	throttle([func], [wait=100], [options={}])</h4>
+
+	<h5>func<br><i>string</i></h5>
+	<p>The name of the function to be throttled. Defaults to the name of the parent (calling) function.</p>
+	<p><i>Note: Debounce relies on 'arguments.callee.caller.name' when no function name is given. 'arguments.callee.caller.name' works well in all major browsers, but is deprecated.</i></p>
+
+	<h5>wait<br><i>int</i></h5>
+	The number of milliseconds to delay. Default: 100.
+
+	<h5>options<br><i>object</i></h5>
+	<p>Default values:</p>
+	<code>
+	{<br>
+		&emsp;leading: false, // Set to true if you want function to run on leading edge of timeout<br>
+		&emsp;trailing: true, // Set to true if you want function to run on trailing edge of timeout<br>
+		&emsp;maxWait: 0, // The maximum time (in ms) func is allowed to be delayed before it's invoked.<br>
+	}
+	</code>
+
+
+	<h3>Examples</h3>
+
+	<div class="example1">
+		<h4>Debounce</h4>
+		<p>The function will only run after the mouse has stopped moving for at least 500ms:</p>
+		<code>
+			function example1() {<br>
+				&emsp;if(<b>debounce(500)</b>) return;<br>
+				<br>
+				&emsp;// Continue running function...<br>
+			}
+		</code>
+		<div class="demo"></div>
+		<div class="feedback">
+			<p>Event triggered <span class="event_count">0</span> times</p>
+			<p>Function run <span class="function_count">0</span> times</p>
+			<p class="function_notice">Function Run!</p>
+		</div>
+	</div>
+
+	<div class="example2">
+		<h4>Throttle</h4>
+		<p>The function will run every 500ms as long as the box registers a mouse movement:</p>
+		<code>
+			function example2() {<br>
+				&emsp;if(<b>throttle(500)</b>) return;<br>
+				<br>
+				&emsp;// Continue running function...<br>
+			}
+		</code>
+		<div class="demo"></div>
+		<div class="feedback">
+			<p>Event triggered <span class="event_count">0</span> times</p>
+			<p>Function run <span class="function_count">0</span> times</p>
+			<p class="function_notice">Function Run!</p>
+		</div>
+	</div>
+
+</body>
+
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="throttle.js"></script>
+<script>
+
+
+
+
+
+function1_triggered = 1;
+function example1() {
+	if(debounce(500)) return;
+	// Continue running function
+	$('.example1 .function_count').html(function1_triggered++);
+	$('.example1 .function_notice').finish().fadeIn(50).delay(200).fadeOut(400);
+}
+
+function2_triggered = 1;
+function example2() {
+	if(throttle(500)) return;
+	// Continue running function
+	$('.example2 .function_count').html(function2_triggered++);
+	$('.example2 .function_notice').finish().fadeIn(50).delay(200).fadeOut(400);
+}
+
+
+$(function() {
+
+	$('.function_notice').hide();
+
+	event1_triggered = 1;
+	$('.demo').mousemove(function() {
+		example_number = $(this).parent().attr('class');
+		$('.'+example_number+' .event_count').html(event1_triggered++);
+		var fn = window[example_number];
+		fn();
+	});
+
+});
+
+</script>
