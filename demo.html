@@ -2,9 +2,9 @@
 <html lang="en-us">
 
 <head>
-	<title>Throttle</title>
+	<title>Function Throttle | Documentation</title>
 	<meta charset="utf-8" />
-	<meta name="description" content="!!!" />
+	<meta name="description" content="Control how often a function gets called from within the function itself." />
 	<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- !!! add ", user-scalable=no" if mobile app -->
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<link rel="canonical" href="!!!http://example.com/2017/09/a-new-article-to-red.html"> <!-- Helps prevent duplicate content issues -->
@@ -12,26 +12,26 @@
 	<meta name="theme-color" content="#333">
 
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="!!!https://sitename.com/" />
-	<meta property="og:title" content="!!!Page Title" />
-	<meta property="og:description" content="!!!Page Description" />
-	<meta property="og:image" content="!!!https://sitename.com/img/something.png" />
-	<meta property="og:site_name" content="!!!Site Name">
+	<meta property="og:url" content="http://projects.thomhines.com/Function-Throttle" />
+	<meta property="og:title" content="Function Throttle | Documentation" />
+	<meta property="og:description" content="Control how often a function gets called from within the function itself." />
+	<!-- <meta property="og:image" content="!!!https://sitename.com/img/something.png" /> -->
+	<meta property="og:site_name" content="Function Throttle | Documentation">
 	<meta property="og:locale" content="en_US">
 	<meta name="twitter:card" content="summary">
-	<meta name="twitter:site" content="!!!@site_account">
-	<meta name="twitter:creator" content="!!!@individual_account">
-	<meta name="twitter:url" content="!!!https://sitename.com/">
-	<meta name="twitter:title" content="!!!Page Title">
-	<meta name="twitter:description" content="!!!Page Description (less than 200 characters)">
-	<meta name="twitter:image" content="!!!https://example.com/image.jpg">
-	<link rel="image_src" href="!!!https://sitename.com/img/something.png">
+	<!-- <meta name="twitter:site" content="!!!@site_account"> -->
+	<!-- <meta name="twitter:creator" content="!!!@individual_account"> -->
+	<meta name="twitter:url" content="http://projects.thomhines.com/Function-Throttle">
+	<meta name="twitter:title" content="Function Throttle | Documentation">
+	<meta name="twitter:description" content="Control how often a function gets called from within the function itself.">
+	<!-- <meta name="twitter:image" content="!!!https://example.com/image.jpg"> -->
+	<!-- <link rel="image_src" href="!!!https://sitename.com/img/something.png"> -->
 
 	<style>
 		body {
 			width: 500px;
-			margin: 100px auto;
-			background: #fee;
+			margin: 100px auto 40px;
+			background: #e4806f;
 			color: #333;
 			font-family: Lato, Helvetica, Arial, sans-serif;
 			overflow: auto;
@@ -42,7 +42,7 @@
 		}
 
 		h4 {
-			margin: 5em 0 1em;
+			margin: 2em 0 1em;
 			clear: both;
 			line-height: 1.4em;
 		}
@@ -50,6 +50,38 @@
 		h3 + h4,
 		.example1 h4 {
 			margin-top: 1em;
+		}
+
+		h3 + p,
+		h4 + p {
+			margin-top: -1em;
+		}
+
+		code {
+			margin: 0 0 20px;
+			padding: 10px;
+			display: block;
+			background: rgba(255, 255, 255, .2);
+			white-space: nowrap;
+			overflow-x: auto;
+		}
+
+		a {
+			color: #622;
+		}
+
+		footer {
+			margin: 100px 0 20px;
+		}
+
+		.event_count,
+		.function_count {
+			font-weight: bold;
+		}
+
+		[class*='feedback'] {
+			margin: 0 0 0 240px;
+			font-size: 1em;
 		}
 
 		[class*='example'] {
@@ -62,67 +94,79 @@
 			width: 200px;
 			height: 200px;
 			padding: 10px;
-			background: #fdd;
+			background: #fff;
 			font-size: 12px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 
 		.demo:before {
 			content: "Move mouse in here...";
-		}
-
-		[class*='feedback'] {
-			margin: 0 0 0 240px;
+			display: block;
+			margin: 0;
+			padding: 0;
+			line-height: 0;
 		}
 
 		.function_notice {
-			background: #faa;
-			padding: .2em .6em;
+			background: #f22;
+			color: #fff;
+			padding: 1em;
 			text-align: center;
-		}
-
-		code {
-			margin: 0 0 20px;
-			padding: 10px;
-			display: block;
-			background: #eee;
-			white-space: nowrap;
-			overflow-x: auto;
 		}
 
 	</style>
 </head>
 <body>
 
-	<h1>Throttle Demo</h1>
-	<h2>In-Function debouncing/throttling to control how often a function gets run.</h2>
-	<p>similar to the debounce/throttle functions in Lodash, but meant to be be run within the function itself instead of attached to an event. This keeps your code clean (no need to attach debounce to EVERY event trigger) and ensures that your functions are consistently throttled no matter how many triggers there might be.</p>
+	<a href="https://github.com/thomhines/Function-Throttle"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
+	<h1>Function Throttle | Documentation</h1>
+	<h2>Control how often a function gets invoked from within the function itself.</h2>
+	<p>Similar to the debounce/throttle functions found in <a href="https://lodash.com/docs/4.17.4#debounce">Lodash</a>, but meant to be be run within the function itself instead of attached to an event. This keeps your code clean (no need to attach debounce to EVERY event trigger) and ensures that your functions are consistently throttled no matter how many triggers there might be.</p>
+
+	<h3>Usage</h3>
 	<p>To use these functions, simply place them at the top of your function like so and they will limit how often the rest of your function is run based on the settings:</p>
 
-	<code>if(<b>debounce()</b>) return;</code>
+	<code>
+		function exampleFunction() {<br>
+			&nbsp;&nbsp;<b>if(debounce()) return;</b><br>
+			<br>
+			&nbsp;&nbsp;// Continue running function...<br>
+		}
+	</code>
 	<p>or</p>
-	<code>if(<b>throttle()</b>) return;</code>
+	<code><b>if(throttle()) return;</b></code>
+
+
+
+	<p>This library comes with two functions to control your functions:</p>
+
+	<h4>debounce([func], [wait=100], [options={}])</h4>
+	<p>Prevent function from running until <i>wait</i> number of milliseconds has passed without it being triggered.</p>
+
+	<h4>throttle([func], [wait=100], [options={}])</h4>
+	<p>Prevent function more than once every <i>wait</i> milliseconds.</p>
 
 
 	<h3>Options</h3>
 
-	<h4>debounce([func], [wait=100], [options={}])<br>
-	throttle([func], [wait=100], [options={}])</h4>
+	<h4>func<br><i>string</i></h4>
+	<p>The name of the function to be throttled. <i>Default: parent (calling) function</i></p>
+	<p><i>Note: debounce/throttle relies on 'arguments.callee' property to determine function name when 'func' is empty. Although 'arguments.callee' works well in all major browsers, use it with caution as it is deprecated.</i></p>
 
-	<h5>func<br><i>string</i></h5>
-	<p>The name of the function to be throttled. Defaults to the name of the parent (calling) function.</p>
-	<p><i>Note: Debounce relies on 'arguments.callee.caller.name' when no function name is given. 'arguments.callee.caller.name' works well in all major browsers, but is deprecated.</i></p>
+	<h4>wait<br><i>int</i></h4>
+	<p>The number of milliseconds to delay. <i>Default: 100</i></p>
 
-	<h5>wait<br><i>int</i></h5>
-	The number of milliseconds to delay. Default: 100.
-
-	<h5>options<br><i>object</i></h5>
-	<p>Default values:</p>
+	<h4>options<br><i>object</i></h4>
+	<p>Control when the function will run in relation to the timeout.</p>
+	<p><i>Default values:</i></p>
 	<code>
 	{<br>
-		&emsp;leading: false, // Set to true if you want function to run on leading edge of timeout<br>
-		&emsp;trailing: true, // Set to true if you want function to run on trailing edge of timeout<br>
-		&emsp;maxWait: 0, // The maximum time (in ms) func is allowed to be delayed before it's invoked.<br>
+		&nbsp;&nbsp;leading: false, // Set to true if you want function to run on leading edge of timeout<br>
+		&nbsp;&nbsp;trailing: true, // Set to true if you want function to run on trailing edge of timeout<br>
+		&nbsp;&nbsp;maxWait: 0, // The maximum time (in ms) function is allowed to be delayed before it's invoked.<br>
 	}
 	</code>
 
@@ -134,14 +178,16 @@
 		<p>The function will only run after the mouse has stopped moving for at least 500ms:</p>
 		<code>
 			function example1() {<br>
-				&emsp;if(<b>debounce(500)</b>) return;<br>
+				&nbsp;&nbsp;if(<b>debounce(500)</b>) return;<br>
 				<br>
-				&emsp;// Continue running function...<br>
-			}
+				&nbsp;&nbsp;// Continue running function...<br>
+			}<br>
+			<br>
+			$('.demo1').mousemove(example1);
 		</code>
 		<div class="demo"></div>
 		<div class="feedback">
-			<p>Event triggered <span class="event_count">0</span> times</p>
+			<p>Mouse event triggered <span class="event_count">0</span> times</p>
 			<p>Function run <span class="function_count">0</span> times</p>
 			<p class="function_notice">Function Run!</p>
 		</div>
@@ -149,21 +195,28 @@
 
 	<div class="example2">
 		<h4>Throttle</h4>
-		<p>The function will run every 500ms as long as the box registers a mouse movement:</p>
+		<p>The function will run every 1000ms as long as the box registers a mouse movement:</p>
 		<code>
 			function example2() {<br>
-				&emsp;if(<b>throttle(500)</b>) return;<br>
+				&nbsp;&nbsp;if(<b>throttle(1000)</b>) return;<br>
 				<br>
-				&emsp;// Continue running function...<br>
-			}
+				&nbsp;&nbsp;// Continue running function...<br>
+			}<br>
+			<br>
+			$('.demo2').mousemove(example2);
 		</code>
 		<div class="demo"></div>
 		<div class="feedback">
-			<p>Event triggered <span class="event_count">0</span> times</p>
+			<p>Mouse event triggered <span class="event_count">0</span> times</p>
 			<p>Function run <span class="function_count">0</span> times</p>
 			<p class="function_notice">Function Run!</p>
 		</div>
 	</div>
+
+	<footer>
+		<p>Copyright 2018 Thom Hines. Licensed under MIT License.</p>
+
+	</footer>
 
 </body>
 
@@ -188,7 +241,7 @@ function example1() {
 
 function2_triggered = 1;
 function example2() {
-	if(throttle(500)) return;
+	if(throttle(1000)) return;
 	// Continue running function
 	$('.example2 .function_count').html(function2_triggered++);
 	$('.example2 .function_notice').finish().fadeIn(50).delay(200).fadeOut(400);

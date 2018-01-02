@@ -1,5 +1,7 @@
 # Throttle
 
+##### Control how often a function gets invoked from within the function itself.
+
 Debounce/throttle functions similar to lodash, but meant to be be run within the function itself instead of on an event so that they are consistently throttled no matter how many triggers there might be.
 
 
