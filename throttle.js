@@ -104,7 +104,7 @@ function throttle(_func, _wait, _options) {
 	// Set defaults
 	if(!func) func = arguments.callee.caller.name;
 	if(!wait) wait = 100;
-	if(!options) options = {leading: false, trailing: true};
+	if(!options) options = {leading: true, trailing: false};
 
 	options.maxWait = wait;
 
