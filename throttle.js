@@ -5,7 +5,7 @@
 * Licensed under MIT.
 * @author Thom Hines
 * https://github.com/thomhines/Function-Throttle
-* @version 1
+* @version 2
 */
 
 
@@ -70,8 +70,16 @@ function debounce(_func, _wait, _options) { // leading=true, trailing=false, max
 
 	if(options.maxWait && !ft_maxwait_timers[func]) {
 		ft_maxwait_timers[func] = setTimeout(function() {
-			ft_maxwait_timers[func] = 'run_immediately';
-			fn();
+			if(options.leading)	{
+				clearTimeout(ft_timers[func]);
+				clearTimeout(ft_maxwait_timers[func]);
+				ft_timers[func] = null;
+				ft_maxwait_timers[func] = null;
+			}
+			if(options.trailing)	{
+				ft_maxwait_timers[func] = 'run_immediately';
+				fn();
+			}
 		}, options.maxWait);
 	}
 
@@ -96,7 +104,7 @@ function throttle(_func, _wait, _options) {
 	// Set defaults
 	if(!func) func = arguments.callee.caller.name;
 	if(!wait) wait = 100;
-	if(!options) options = {};
+	if(!options) options = {leading: false, trailing: true};
 
 	options.maxWait = wait;
 
