@@ -37,8 +37,12 @@
 			overflow: auto;
 		}
 
+		p + h2 {
+			margin-top: 3em;
+		}
+
 		h3 {
-			margin: 5em 0 1em;
+			margin: 2em 0 1em;
 		}
 
 		h4 {
@@ -72,6 +76,11 @@
 
 		footer {
 			margin: 100px 0 20px;
+		}
+
+		.example2,
+		.example3 {
+			margin-top: 4em;
 		}
 
 		.event_count,
@@ -126,7 +135,7 @@
 	<h2>Control how often a function gets invoked from within the function itself.</h2>
 	<p>Similar to the debounce/throttle functions found in <a href="https://lodash.com/docs/4.17.4#debounce">Lodash</a>, but meant to be be run within the function itself instead of attached to an event. This keeps your code clean (no need to attach debounce to EVERY event trigger) and ensures that your functions are consistently throttled no matter how many triggers there might be.</p>
 
-	<h3>Usage</h3>
+	<h2>Usage</h2>
 	<p>To use these functions, simply place them at the top of your function like so and they will limit how often the rest of your function is run based on the settings:</p>
 
 	<code>
@@ -150,7 +159,7 @@
 	<p>Prevent function more than once every <i>wait</i> milliseconds.</p>
 
 
-	<h3>Settings</h3>
+	<h2>Settings</h2>
 	<p>The debounce() and throttle() functions will make smart assumptions about how to run if no arguments are given, but can be configured to run </p>
 
 	<h3>wait (optional)<br><i>int</i></h3>
@@ -177,15 +186,15 @@
 	<p>The maximum time (in ms) function is allowed to be delayed before it's invoked <i>Default: 0</i></p>
 	<h4>function<br><i>string</i></h4>
 	<p>The name of the function to run. If blank, it will use the name of the function that called it.<br>
-	<i>Note: The function name is derived from the <b>arguments.callee</b> object, which isn't supported on older browsers. If you need to support legacy browsers, use this setting.</p>
+	<i>Note: The function name is derived from the <b>arguments.callee</b> object, which isn't supported on older browsers. If you need to support legacy browsers, use this setting.</i></p>
 	<h4>arguments<br><i>array</i></h4>
 	<p>A list of arguments to be passed to function call. If blank, it will use the arguments of the function that called it.<br>
 	<i>Note: Also uses <b>arguments.callee</b>. See previous note about supporting older browsers.</i></p>
 
 
-	<h3>Examples</h3>
+	<h2>Examples</h2>
 
-	<div class="example1">
+	<div class="example example1">
 		<h4>Debounce</h4>
 		<p>The function will only run after the mouse has stopped moving for at least 500ms:</p>
 		<code>
@@ -205,7 +214,7 @@
 		</div>
 	</div>
 
-	<div class="example2">
+	<div class="example example2">
 		<h4>Throttle</h4>
 		<p>The function will run every 1000ms as long as the box registers a mouse movement:</p>
 		<code>
@@ -225,7 +234,7 @@
 		</div>
 	</div>
 
-	<div class="example3">
+	<div class="example example3">
 		<h4>Options</h4>
 		<p>Arguments will be passed along with the function call each time it's triggered.</p>
 		<p>The function will run once but not again until after 100ms of no mouse movement:</p>
