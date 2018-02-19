@@ -31,7 +31,7 @@
 		body {
 			width: 500px;
 			margin: 100px auto 40px;
-			background: #e4806f;
+			background: #a0ffd1;
 			color: #333;
 			font-family: Lato, Helvetica, Arial, sans-serif;
 			overflow: auto;
@@ -143,32 +143,44 @@
 
 	<p>This library comes with two functions to control your functions:</p>
 
-	<h4>debounce([func], [wait=100], [options={}])</h4>
+	<h4>debounce([wait=100], [options={}])</h4>
 	<p>Prevent function from running until <i>wait</i> number of milliseconds has passed without it being triggered.</p>
 
-	<h4>throttle([func], [wait=100], [options={}])</h4>
+	<h4>throttle([wait=100], [options={}])</h4>
 	<p>Prevent function more than once every <i>wait</i> milliseconds.</p>
 
 
-	<h3>Options</h3>
+	<h3>Settings</h3>
+	<p>The debounce() and throttle() functions will make smart assumptions about how to run if no arguments are given, but can be configured to run </p>
 
-	<h4>func<br><i>string</i></h4>
-	<p>The name of the function to be throttled. <i>Default: parent (calling) function</i></p>
-	<p><i>Note: debounce/throttle relies on 'arguments.callee' property to determine function name when 'func' is empty. Although 'arguments.callee' works well in all major browsers, use it with caution as it is deprecated.</i></p>
-
-	<h4>wait<br><i>int</i></h4>
+	<h3>wait (optional)<br><i>int</i></h3>
 	<p>The number of milliseconds to delay. <i>Default: 100</i></p>
 
-	<h4>options<br><i>object</i></h4>
+	<h3>options (optional)<br><i>object</i></h3>
 	<p>Control when the function will run in relation to the timeout.</p>
-	<p><i>Default values:</i></p>
 	<code>
 	{<br>
-		&nbsp;&nbsp;leading: false, // Set to true if you want function to run on leading edge of timeout<br>
-		&nbsp;&nbsp;trailing: true, // Set to true if you want function to run on trailing edge of timeout<br>
-		&nbsp;&nbsp;maxWait: 0, // The maximum time (in ms) function is allowed to be delayed before it's invoked.<br>
+		&nbsp;&nbsp;leading: false,<br>
+		&nbsp;&nbsp;trailing: true,<br>
+		&nbsp;&nbsp;maxWait: true,<br>
+		&nbsp;&nbsp;function: '',<br>
+		&nbsp;&nbsp;arguments: [],<br>
 	}
 	</code>
+
+	<h5>Default values:</h5>
+	<h4>leading<br><i>boolean</i></h4>
+	<p>Set to true if you want function to run on leading edge of timeout <i>Default: false</i></p>
+	<h4>trailing<br><i>boolean</i></h4>
+	<p>Set to true if you want function to run on trailing edge of timeout <i>Default: false</i></p>
+	<h4>maxWait<br><i>int</i></h4>
+	<p>The maximum time (in ms) function is allowed to be delayed before it's invoked <i>Default: 0</i></p>
+	<h4>function<br><i>string</i></h4>
+	<p>The name of the function to run. If blank, it will use the name of the function that called it.<br>
+	<i>Note: The function name is derived from the <b>arguments.callee</b> object, which isn't supported on older browsers. If you need to support legacy browsers, use this setting.</p>
+	<h4>arguments<br><i>array</i></h4>
+	<p>A list of arguments to be passed to function call. If blank, it will use the arguments of the function that called it.<br>
+	<i>Note: Also uses <b>arguments.callee</b>. See previous note about supporting older browsers.</i></p>
 
 
 	<h3>Examples</h3>
@@ -213,6 +225,36 @@
 		</div>
 	</div>
 
+	<div class="example3">
+		<h4>Options</h4>
+		<p>Arguments will be passed along with the function call each time it's triggered.</p>
+		<p>The function will run once but not again until after 100ms of no mouse movement:</p>
+		<code>
+			function example3(_string, _number, _null) {<br>
+				&nbsp;&nbsp;if(<b>debounce({<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;function: 'example3',<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;arguments: [_string, _number, _null],<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;leading: true,<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;trailing: false,<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;maxWait: false<br>
+				&nbsp;&nbsp;})</b>) return;<br>
+				<br>
+				&nbsp;&nbsp;// Continue running function...<br>
+			}<br>
+			<br>
+			$('.demo3').mousemove(function() {<br>
+				&nbsp;&nbsp;example3('test', 34, null);<br>
+			});
+		</code>
+		<div class="demo"></div>
+		<div class="feedback">
+			<p>Mouse event triggered <span class="event_count">0</span> times</p>
+			<p>Arguments: <span class="arguments"></span></p>
+			<p>Function run <span class="function_count">0</span> times</p>
+			<p class="function_notice">Function Run!</p>
+		</div>
+	</div>
+
 	<footer>
 		<p>Copyright 2018 Thom Hines. Licensed under MIT License.</p>
 
@@ -234,7 +276,7 @@
 function1_triggered = 1;
 function example1() {
 	if(debounce(500)) return;
-	// Continue running function
+	// Continue running function...
 	$('.example1 .function_count').html(function1_triggered++);
 	$('.example1 .function_notice').finish().fadeIn(50).delay(200).fadeOut(400);
 }
@@ -242,9 +284,24 @@ function example1() {
 function2_triggered = 1;
 function example2() {
 	if(throttle(1000)) return;
-	// Continue running function
+	// Continue running function...
 	$('.example2 .function_count').html(function2_triggered++);
 	$('.example2 .function_notice').finish().fadeIn(50).delay(200).fadeOut(400);
+}
+
+function3_triggered = 1;
+function example3(_string, _number, _null) {
+	if(debounce({
+		function: 'example3',
+		arguments: [_string, _number, _null],
+		leading: true,
+		trailing: false,
+		maxWait: false
+	})) return;
+	// Continue running function...
+	$('.example3 .function_count').html(function3_triggered++);
+	$('.example3 .arguments').html(_string +", "+ _number +", "+ _null);
+	$('.example3 .function_notice').finish().fadeIn(50).delay(200).fadeOut(400);
 }
 
 
@@ -257,7 +314,8 @@ $(function() {
 		example_number = $(this).parent().attr('class');
 		$('.'+example_number+' .event_count').html(event1_triggered++);
 		var fn = window[example_number];
-		fn();
+		if(example_number == 'example3') fn('test', 34, null);
+		else fn();
 	});
 
 });
