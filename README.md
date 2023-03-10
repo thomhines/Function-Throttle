@@ -1,6 +1,6 @@
 # Function Throttle
 
-### [Check out the demo page](http://projects.thomhines.com/Function-Throttle/) for more details on how to use this thing.
+### [Check out the demo page](https://projects.thomhines.com/throttler/) for more details on how to use this thing.
 
 ##### Control how often a function gets invoked from within the function itself.
 
